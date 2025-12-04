@@ -1,4 +1,4 @@
-package edu.icet.model.entity;
+package edu.icet.Model.Entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,7 +12,7 @@ import java.util.List;
 @ToString
 @Entity
 @Table(name = "users")
-public class UserEntity {
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

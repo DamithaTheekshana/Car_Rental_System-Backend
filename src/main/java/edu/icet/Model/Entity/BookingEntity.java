@@ -1,4 +1,4 @@
-package edu.icet.model.entity;
+package edu.icet.Model.Entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -27,7 +27,7 @@ public class BookingEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity user;
+    private Users user;
 
     @ManyToOne
     @JoinColumn(name = "vehicle_id", nullable = false)

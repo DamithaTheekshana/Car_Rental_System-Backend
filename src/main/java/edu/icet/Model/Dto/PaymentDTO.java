@@ -1,4 +1,4 @@
-package edu.icet.model.dto;
+package edu.icet.Model.Dto;
 
 import lombok.*;
 
