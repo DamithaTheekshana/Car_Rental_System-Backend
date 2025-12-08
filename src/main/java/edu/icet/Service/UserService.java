@@ -1,5 +1,6 @@
 package edu.icet.Service;
 
+import edu.icet.Model.Dto.AdminRegistationRequestDto;
 import edu.icet.Model.Dto.LoginRequestDto;
 import edu.icet.Model.Dto.RegistrationRequestDto;
 import edu.icet.Model.Dto.UserResponseDto;
@@ -66,5 +67,24 @@ public class UserService {
                 u.getPhone(),
                 u.getNic(),
                 u.getRole());
+    }
+
+    public UserResponseDto registerAdmin(AdminRegistationRequestDto reqAdmin) throws IllegalAccessException {
+        if (userRepository.existsByEmail(reqAdmin.getEmail())) {
+            throw new IllegalAccessException("Email already in use");
+        }
+        if (reqAdmin.getNic() != null && userRepository.existsByNic(reqAdmin.getNic())) {
+            throw new IllegalAccessException("Nic already in use");
+        }
+        Users users =new Users();
+        users.setName(reqAdmin.getFullName());
+        users.setEmail(reqAdmin.getEmail());
+        users.setPassword(passwordEncoder.encode(reqAdmin.getPassword()));
+        users.setPhone(reqAdmin.getPhoneNumber());
+        users.setNic(reqAdmin.getNic());
+        users.setRole(reqAdmin.getRole() != null ? reqAdmin.getRole() : Users.Role.CUSTOMER);
+
+        Users saved = userRepository.save(users);
+        return toResponse(saved);
     }
 }

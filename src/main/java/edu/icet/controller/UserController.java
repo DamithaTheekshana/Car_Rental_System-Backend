@@ -1,5 +1,6 @@
 package edu.icet.controller;
 
+import edu.icet.Model.Dto.AdminRegistationRequestDto;
 import edu.icet.Model.Dto.LoginRequestDto;
 import edu.icet.Model.Dto.RegistrationRequestDto;
 import edu.icet.Model.Dto.UserResponseDto;
@@ -18,7 +19,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/register")
+    @PostMapping("/userregister")
     public UserResponseDto register(@Valid @RequestBody RegistrationRequestDto req){
         try {
             return  userService.register(req);
@@ -26,6 +27,15 @@ public class UserController {
             throw new RuntimeException(e);
         }
 
+    }
+
+    @PostMapping("/adminregister")
+    public UserResponseDto registerAdmin(@Valid @RequestBody AdminRegistationRequestDto reqAdmin){
+        try {
+            return userService.registerAdmin(reqAdmin);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @PostMapping("/login")
