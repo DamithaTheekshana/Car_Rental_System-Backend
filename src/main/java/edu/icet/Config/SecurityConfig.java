@@ -1,4 +1,4 @@
-package edu.icet.Security;
+package edu.icet.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

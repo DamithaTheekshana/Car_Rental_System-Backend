@@ -31,7 +31,7 @@ public class BookingEntity {
 
     @ManyToOne
     @JoinColumn(name = "vehicle_id", nullable = false)
-    private VehicleEntity vehicle;
+    private Vehicle vehicle;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "payment_id")

@@ -11,7 +11,7 @@ import java.util.List;
 @ToString
 @Entity
 @Table(name = "vehicle")
-public class VehicleEntity {
+public class Vehicle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
