@@ -31,5 +31,5 @@ public class Vehicle {
     private String status;
 
     @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL)
-    private List<BookingEntity> bookings;
+    private List<Booking> bookings;
 }

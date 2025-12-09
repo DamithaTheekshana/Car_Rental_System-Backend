@@ -19,8 +19,9 @@ public class PaymentEntity {
 
     private double amount;
     private LocalDateTime paidDate;
+    private String status;
 
     @OneToOne
     @JoinColumn(name = "booking_id", nullable = false)
-    private BookingEntity bookingEntity;
+    private Booking bookingEntity;
 }

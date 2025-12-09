@@ -36,7 +36,7 @@ public class Users {
     private Role role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<BookingEntity> bookings;
+    private List<Booking> bookings;
 
     public enum Role {
         CUSTOMER,

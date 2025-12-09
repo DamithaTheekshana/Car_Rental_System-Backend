@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @ToString
 @Entity
 @Table(name = "booking")
-public class BookingEntity {
+public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +23,6 @@ public class BookingEntity {
     private LocalDate startDate;
     private LocalDate endDate;
     private String status;
-    private double total;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
