@@ -38,18 +38,6 @@ public class BookingService {
 
         Vehicle vehicle = vehicleRepository.findById(dto.getVehicleId()).orElseThrow(() -> new RuntimeException("Vehicle not found"));
 
-        // ----------- SIMPLE OVERLAP CHECK -----------
-        List<Booking> existingBookings = bookingRepository.checkOverlap(
-                dto.getVehicleId(),
-                dto.getStartDate(),
-                dto.getEndDate()
-        );
-
-        if (!existingBookings.isEmpty()) {
-            throw new RuntimeException("This vehicle is already booked for the selected date range.");
-        }
-        // --------------------------------------------
-
         Booking booking = new Booking();
         booking.setBookingDate(dto.getBookingDate());
         booking.setStartDate(dto.getStartDate());
@@ -88,6 +76,7 @@ public class BookingService {
     }
 
     public void deleteBooking(Long bookingId) {
+
         bookingRepository.deleteById(bookingId);
     }
 
@@ -104,5 +93,20 @@ public class BookingService {
 
          booking.setStatus(dto.getStatus());
          bookingRepository.save(booking);
+
+        // Update booking status
+        booking.setStatus(dto.getStatus());
+        bookingRepository.save(booking);
+
+        // Update vehicle status if booking is approved
+        if ("APPROVED".equalsIgnoreCase(dto.getStatus())) {
+            Vehicle vehicle = booking.getVehicle(); // assuming Booking has a getVehicle() relation
+            vehicle.setStatus("BOOKED");
+            vehicleRepository.save(vehicle);
+        } else if ("REJECT".equalsIgnoreCase(dto.getStatus())) {
+            Vehicle vehicle = booking.getVehicle();
+            vehicle.setStatus("AVAILABLE"); // optional: reset vehicle if booking rejected
+            vehicleRepository.save(vehicle);
+        }
     }
 }

@@ -1,6 +1,8 @@
 package edu.icet.Service;
 
+import edu.icet.Model.Dto.AdminDisplayVehiclesDto;
 import edu.icet.Model.Dto.VehicleDTO;
+import edu.icet.Model.Dto.VehicleResponseDto;
 import edu.icet.Model.Entity.Vehicle;
 import edu.icet.Repository.VehicleRepository;
 import org.modelmapper.ModelMapper;
@@ -28,8 +30,7 @@ public class VehicleService {
 
     private final String UPLOAD_DIR = "uploads/";
 
-
-    public Vehicle addVehicle(VehicleDTO dto, MultipartFile image) {
+     public Vehicle addVehicle(VehicleDTO dto, MultipartFile image) {
 
         Vehicle vehicle = mapper.map(dto, Vehicle.class);
 
@@ -49,9 +50,23 @@ public class VehicleService {
         return vehicleRepository.save(vehicle);
     }
 
+     public List<VehicleResponseDto> getAllVehicles() {
 
-    public List<Vehicle> getAllVehicles() {
-       return vehicleRepository.findAll();
+        List<Vehicle> vehicles = vehicleRepository.findByStatus("AVAILABLE");
+
+        return vehicles.stream()
+                .map(v -> new VehicleResponseDto(
+                        v.getVehicleId(),
+                        v.getImagePath(),
+                        v.getModel(),
+                        v.getRegNo(),
+                        v.getBrand(),
+                        v.getType(),
+                        v.getFuelType(),
+                        v.getSeat(),
+                        v.getDailyRate()
+                ))
+                .toList();
     }
 
     public void deleteVehicle(Long vehicleId) {
@@ -68,7 +83,6 @@ public class VehicleService {
                 throw new RuntimeException("Failed to delete image file", e);
             }
         }
-
         vehicleRepository.deleteById(vehicleId);
     }
 
@@ -76,11 +90,9 @@ public class VehicleService {
     public void updateVehicle(VehicleDTO dto) {
         Vehicle vehicle = vehicleRepository.findById(dto.getVehicleId())
                 .orElseThrow(() -> new RuntimeException("Vehicle not found"));
-//        mapper.getConfiguration().setSkipNullEnabled(false);
         mapper.map(dto, vehicle);
         vehicleRepository.save(vehicle);
     }
-
 
     public List<VehicleDTO> searchVehicle(String type) {
 
@@ -95,4 +107,21 @@ public class VehicleService {
                 .toList();
     }
 
+    public List<AdminDisplayVehiclesDto> adminDisplayVehicles() {
+        List<Vehicle> vehicles = vehicleRepository.findAll();
+        return vehicles.stream()
+                .map(v -> new AdminDisplayVehiclesDto(
+                        v.getVehicleId(),
+                        v.getBrand(),
+                        v.getModel(),
+                        v.getRegNo(),
+                        v.getFuelType(),
+                        v.getImagePath(),
+                        v.getType(),
+                        v.getSeat(),
+                        v.getDailyRate(),
+                        v.getStatus()
+                ))
+                .toList();
+    }
 }

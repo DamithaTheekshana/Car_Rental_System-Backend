@@ -1,7 +1,8 @@
 package edu.icet.controller;
 
+import edu.icet.Model.Dto.AdminDisplayVehiclesDto;
 import edu.icet.Model.Dto.VehicleDTO;
-import edu.icet.Model.Entity.Vehicle;
+import edu.icet.Model.Dto.VehicleResponseDto;
 import edu.icet.Service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -30,8 +31,14 @@ public class VehicleController {
     }
 
     @GetMapping("/allVehicles")
-    public List<Vehicle> getAllVehicles(){
+    public List<VehicleResponseDto> getAllVehicles(){
+
         return vehicleService.getAllVehicles();
+    }
+
+    @GetMapping("/adminDisplayVehicles")
+    public List<AdminDisplayVehiclesDto> getAdminDisplayVehicles(){
+        return vehicleService.adminDisplayVehicles();
     }
 
     @DeleteMapping("/deleteVehicle/{vehicleId}")

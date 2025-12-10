@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class VehicleDTO {
+public class VehicleResponseDto {
 
     private Long vehicleId;
     private String imagePath;
@@ -18,5 +18,4 @@ public class VehicleDTO {
     private String fuelType;
     private int seat;
     private double dailyRate;
-
 }

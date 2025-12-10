@@ -9,8 +9,5 @@ import java.util.List;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
-    @Query("SELECT b FROM Booking b WHERE b.vehicle.vehicleId = :vehicleId " +
-            "AND b.startDate <= :endDate AND b.endDate >= :startDate")
-    List<Booking> checkOverlap(Long vehicleId, LocalDate startDate, LocalDate endDate);
 
 }

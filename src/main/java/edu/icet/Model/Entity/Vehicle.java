@@ -28,7 +28,7 @@ public class Vehicle {
     private String fuelType;
     private int seat;
     private double dailyRate;
-    private String status;
+    private String status = "AVAILABLE";
 
     @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL)
     private List<Booking> bookings;

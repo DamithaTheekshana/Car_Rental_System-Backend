@@ -3,6 +3,7 @@ package edu.icet.controller;
 import edu.icet.Model.Dto.BookingDTO;
 import edu.icet.Model.Dto.BookingResponseDto;
 import edu.icet.Model.Dto.UpdateBookingStatusDto;
+import edu.icet.Model.Entity.Booking;
 import edu.icet.Service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
