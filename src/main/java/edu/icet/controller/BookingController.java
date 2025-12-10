@@ -2,6 +2,7 @@ package edu.icet.controller;
 
 import edu.icet.Model.Dto.BookingDTO;
 import edu.icet.Model.Dto.BookingResponseDto;
+import edu.icet.Model.Dto.UpdateBookingStatusDto;
 import edu.icet.Service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -34,5 +35,10 @@ public class BookingController {
     @PutMapping("/updateBooking")
     public void updateBooking(@RequestBody BookingDTO dto){
         bookingService.updateBooking(dto);
+    }
+
+    @PutMapping("/update-status")
+    public void updateStatus(@RequestBody UpdateBookingStatusDto dto){
+        bookingService.updateStatus(dto);
     }
 }

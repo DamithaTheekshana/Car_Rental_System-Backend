@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @ToString
 @Entity
 @Table(name = "payment")
-public class PaymentEntity {
+public class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -2,6 +2,7 @@ package edu.icet.Service;
 
 import edu.icet.Model.Dto.BookingDTO;
 import edu.icet.Model.Dto.BookingResponseDto;
+import edu.icet.Model.Dto.UpdateBookingStatusDto;
 import edu.icet.Model.Entity.Booking;
 import edu.icet.Model.Entity.Users;
 import edu.icet.Model.Entity.Vehicle;
@@ -37,11 +38,22 @@ public class BookingService {
 
         Vehicle vehicle = vehicleRepository.findById(dto.getVehicleId()).orElseThrow(() -> new RuntimeException("Vehicle not found"));
 
+        // ----------- SIMPLE OVERLAP CHECK -----------
+        List<Booking> existingBookings = bookingRepository.checkOverlap(
+                dto.getVehicleId(),
+                dto.getStartDate(),
+                dto.getEndDate()
+        );
+
+        if (!existingBookings.isEmpty()) {
+            throw new RuntimeException("This vehicle is already booked for the selected date range.");
+        }
+        // --------------------------------------------
+
         Booking booking = new Booking();
         booking.setBookingDate(dto.getBookingDate());
         booking.setStartDate(dto.getStartDate());
         booking.setEndDate(dto.getEndDate());
-        booking.setStatus(dto.getStatus());
 
         booking.setUser(user);
         booking.setVehicle(vehicle);
@@ -84,5 +96,13 @@ public class BookingService {
                 .orElseThrow(() -> new RuntimeException("Booking not found"));
         mapper.map(dto, booking);
         bookingRepository.save(booking);
+    }
+
+    public void updateStatus(UpdateBookingStatusDto dto) {
+         Booking booking = bookingRepository.findById(dto.getBookingId())
+                 .orElseThrow(()-> new RuntimeException("Booking Not Found!"));
+
+         booking.setStatus(dto.getStatus());
+         bookingRepository.save(booking);
     }
 }

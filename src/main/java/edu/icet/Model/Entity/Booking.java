@@ -22,7 +22,7 @@ public class Booking {
     private LocalDateTime bookingDate;
     private LocalDate startDate;
     private LocalDate endDate;
-    private String status;
+    private String status = "PENDING";
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -34,5 +34,5 @@ public class Booking {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "payment_id")
-    private PaymentEntity payment;
+    private Payment payment;
 }

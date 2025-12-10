@@ -16,7 +16,6 @@ public class BookingDTO {
     private LocalDateTime bookingDate;
     private LocalDate startDate;
     private LocalDate endDate;
-    private String status;
 
     private Long userId;
     private Long vehicleId;
