@@ -19,6 +19,7 @@ public class Payment {
 
     private double amount;
     private LocalDateTime paidDate;
+    private String type = "Cash";
     private String status;
 
     @OneToOne
