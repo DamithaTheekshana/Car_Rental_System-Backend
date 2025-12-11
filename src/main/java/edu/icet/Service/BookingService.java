@@ -13,9 +13,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,7 +39,7 @@ public class BookingService {
         Vehicle vehicle = vehicleRepository.findById(dto.getVehicleId()).orElseThrow(() -> new RuntimeException("Vehicle not found"));
 
         Booking booking = new Booking();
-        booking.setBookingDate(dto.getBookingDate());
+        booking.setBookingDate(LocalDateTime.now());
         booking.setStartDate(dto.getStartDate());
         booking.setEndDate(dto.getEndDate());
 

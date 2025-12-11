@@ -22,7 +22,11 @@ public class Payment {
     private String type = "Cash";
     private String status;
 
+//    @OneToOne
+//    @JoinColumn(name = "booking_id", nullable = false)
+//    private Booking bookingEntity;
     @OneToOne
     @JoinColumn(name = "booking_id", nullable = false)
     private Booking bookingEntity;
+
 }

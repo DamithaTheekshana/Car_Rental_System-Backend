@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -32,7 +33,10 @@ public class Booking {
     @JoinColumn(name = "vehicle_id", nullable = false)
     private Vehicle vehicle;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "payment_id")
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "payment_id")
+//    private Payment payment;
+    @OneToOne(mappedBy = "bookingEntity", cascade = CascadeType.ALL)
     private Payment payment;
+
 }
