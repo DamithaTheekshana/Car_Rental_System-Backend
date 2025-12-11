@@ -28,10 +28,7 @@ public class PaymentService {
     VehicleRepository vehicleRepository;
 
     public void addPayment(PaymentDTO dto) {
-//        Payment payment = new Payment();
-//        mapper.map(dto,Payment.class);
-//        paymentRepository.save(payment);
-//    }
+
         // 1. Find related booking
         Booking booking = bookingRepository.findById(dto.getBookingId())
                 .orElseThrow(() -> new RuntimeException("Booking not found"));
