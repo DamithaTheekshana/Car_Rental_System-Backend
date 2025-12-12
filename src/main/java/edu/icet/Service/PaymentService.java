@@ -8,6 +8,7 @@ import edu.icet.Model.Entity.Vehicle;
 import edu.icet.Repository.BookingRepository;
 import edu.icet.Repository.PaymentRepository;
 import edu.icet.Repository.VehicleRepository;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class PaymentService {
 
     private ModelMapper mapper = new ModelMapper();
 
-
+    @Transactional
     public void addPayment(PaymentDTO dto) {
         // 1. Fetch booking
         Booking booking = bookingRepository.findById(dto.getBookingId())
