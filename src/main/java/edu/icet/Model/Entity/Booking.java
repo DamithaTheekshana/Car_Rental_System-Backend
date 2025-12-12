@@ -24,6 +24,9 @@ public class Booking {
     private LocalDate startDate;
     private LocalDate endDate;
     private String status = "PENDING";
+    @Column(name = "payment_status")
+    private String paymentStatus = "UNPAID";
+
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -33,9 +36,7 @@ public class Booking {
     @JoinColumn(name = "vehicle_id", nullable = false)
     private Vehicle vehicle;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "payment_id")
-//    private Payment payment;
+
     @OneToOne(mappedBy = "bookingEntity", cascade = CascadeType.ALL)
     private Payment payment;
 
