@@ -42,4 +42,9 @@ public class BookingController {
     public void updateStatus(@RequestBody UpdateBookingStatusDto dto){
         bookingService.updateStatus(dto);
     }
+
+    @GetMapping("searchBooking/{name}")
+    public List<BookingResponseDto> searchBooking(@PathVariable String name){
+        return bookingService.searchBooking(name);
+    }
 }

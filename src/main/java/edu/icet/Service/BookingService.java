@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -110,5 +111,28 @@ public class BookingService {
             vehicle.setStatus("AVAILABLE"); // optional: reset vehicle if booking rejected
             vehicleRepository.save(vehicle);
         }
+    }
+
+    public List<BookingResponseDto> searchBooking(String name) {
+
+        List<Booking> bookings = bookingRepository.findByUser_name(name);
+
+
+        if (bookings.isEmpty()) {
+//            return Collections.emptyList();
+            System.out.println("Your Name has No Bookings");
+        }
+
+        // Booking → BookingResponseDto convert කරලා map කරනවා
+        return bookings.stream().map(booking -> {
+            BookingResponseDto dto = new BookingResponseDto();
+            dto.setBookingId(booking.getBookingId());
+            dto.setVehicleModel(booking.getVehicle().getModel());
+            dto.setVehicleImage(booking.getVehicle().getImagePath());
+            dto.setStartDate(booking.getStartDate());
+            dto.setEndDate(booking.getEndDate());
+
+            return dto;
+        }).collect(Collectors.toList());
     }
 }
