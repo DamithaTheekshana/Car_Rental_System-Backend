@@ -50,7 +50,9 @@ public class BookingService {
     }
 
     public List<BookingResponseDto> getAllBooking() {
-        List<Booking> bookings = bookingRepository.findAll();
+        List<Booking> bookings = bookingRepository.findByPaymentStatus("UNPAID");
+
+
 
         return bookings.stream().map(b -> {
             BookingResponseDto dto = new BookingResponseDto();
@@ -68,7 +70,7 @@ public class BookingService {
             dto.setCustomerName(b.getUser().getName());
             dto.setStatus(b.getStatus());
             dto.setTotalAmount(totalAmount);
-            dto.setPaymentStatus(b.getPayment() != null ? b.getPayment().getStatus() : "PENDING");
+            dto.setPaymentStatus(b.getPaymentStatus());
             dto.setDailyRate(b.getVehicle().getDailyRate()); // NEW
 
             return dto;

@@ -50,9 +50,10 @@ public class PaymentService {
         vehicle.setStatus("AVAILABLE");
         vehicleRepository.save(vehicle);
 
-        payment.setBookingEntity(null);
-        paymentRepository.save(payment);
+        //4.Update booking payment_status
+        booking.setPaymentStatus("PAID");
+        booking.setStatus("SUCCESS");
+        bookingRepository.save(booking);
 
-        bookingRepository.delete(booking);
     }
 }

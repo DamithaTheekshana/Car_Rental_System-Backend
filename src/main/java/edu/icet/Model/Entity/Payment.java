@@ -26,7 +26,7 @@ public class Payment {
 //    @JoinColumn(name = "booking_id", nullable = false)
 //    private Booking bookingEntity;
     @OneToOne
-    @JoinColumn(name = "booking_id", nullable = true)
+    @JoinColumn(name = "booking_id", nullable = false)
     private Booking bookingEntity;
 
 }
