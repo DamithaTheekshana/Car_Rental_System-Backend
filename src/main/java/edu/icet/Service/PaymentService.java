@@ -27,6 +27,9 @@ public class PaymentService {
     @Autowired
     private VehicleRepository vehicleRepository;
 
+    @Autowired
+    private BookingHistoryService bookingHistoryService;
+
     private ModelMapper mapper = new ModelMapper();
 
     @Transactional
@@ -46,15 +49,18 @@ public class PaymentService {
 
         paymentRepository.save(payment);
 
-        // 3. Update vehicle status
-        Vehicle vehicle = booking.getVehicle();
-        vehicle.setStatus("AVAILABLE");
-        vehicleRepository.save(vehicle);
-
-        //4.Update booking payment_status
+        // 3. Update booking payment status
         booking.setPaymentStatus("PAID");
         booking.setStatus("SUCCESS");
         bookingRepository.save(booking);
+
+        // 4. Save booking to history
+        bookingHistoryService.saveBookingHistory(booking, "COMPLETED");
+
+        // 5. Make vehicle available
+        Vehicle vehicle = booking.getVehicle();
+        vehicle.setStatus("AVAILABLE");
+        vehicleRepository.save(vehicle);
 
     }
 }

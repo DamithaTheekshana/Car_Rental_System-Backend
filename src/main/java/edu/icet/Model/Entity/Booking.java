@@ -40,4 +40,6 @@ public class Booking {
     @OneToOne(mappedBy = "bookingEntity", cascade = CascadeType.ALL)
     private Payment payment;
 
+
+
 }
