@@ -113,25 +113,37 @@ public class BookingService {
     }
 
     public void updateStatus(UpdateBookingStatusDto dto) {
-         Booking booking = bookingRepository.findById(dto.getBookingId())
-                 .orElseThrow(()-> new RuntimeException("Booking Not Found!"));
 
-         booking.setStatus(dto.getStatus());
-         bookingRepository.save(booking);
+        Booking booking = bookingRepository.findById(dto.getBookingId())
+                .orElseThrow(() -> new RuntimeException("Booking Not Found!"));
 
-        // Update booking status
-        booking.setStatus(dto.getStatus());
-        bookingRepository.save(booking);
+        String status = dto.getStatus();
 
-        // Update vehicle status if booking is approved
-        if ("APPROVED".equalsIgnoreCase(dto.getStatus())) {
-            Vehicle vehicle = booking.getVehicle(); // assuming Booking has a getVehicle() relation
+        // ADMIN APPROVES BOOKING
+        if ("APPROVED".equalsIgnoreCase(status)) {
+
+            booking.setStatus("APPROVED");
+            bookingRepository.save(booking);
+
+            Vehicle vehicle = booking.getVehicle();
             vehicle.setStatus("BOOKED");
             vehicleRepository.save(vehicle);
-        } else if ("REJECT".equalsIgnoreCase(dto.getStatus())) {
+
+        }
+
+        // ADMIN REJECTS BOOKING
+        else if ("REJECT".equalsIgnoreCase(status)) {
+
+            // Save booking to history
+            bookingHistoryService.saveBookingHistory(booking, "REJECTED");
+
+            // Make vehicle available
             Vehicle vehicle = booking.getVehicle();
-            vehicle.setStatus("AVAILABLE"); // optional: reset vehicle if booking rejected
+            vehicle.setStatus("AVAILABLE");
             vehicleRepository.save(vehicle);
+
+            // Delete booking from booking table
+            bookingRepository.deleteById(booking.getBookingId());
         }
     }
 
