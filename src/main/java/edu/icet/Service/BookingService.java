@@ -31,6 +31,9 @@ public class BookingService {
     @Autowired
     VehicleRepository vehicleRepository;
 
+    @Autowired
+    BookingHistoryService bookingHistoryService;
+
     ModelMapper mapper = new ModelMapper();
 
     public Booking addBooking(BookingDTO dto) {
@@ -87,6 +90,10 @@ public class BookingService {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new RuntimeException("Booking not found"));
 
+        // Save booking to history as CANCELLED
+        bookingHistoryService.saveBookingHistory(booking, "CANCELLED");
+
+        // Make vehicle available again
         Vehicle vehicle = booking.getVehicle();
 
         if ("BOOKED".equalsIgnoreCase(vehicle.getStatus())) {
@@ -94,6 +101,7 @@ public class BookingService {
             vehicleRepository.save(vehicle);
         }
 
+        // Delete booking from booking table
         bookingRepository.deleteById(bookingId);
     }
 
