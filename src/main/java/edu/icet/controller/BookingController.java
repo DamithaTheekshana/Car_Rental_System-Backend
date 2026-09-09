@@ -47,4 +47,9 @@ public class BookingController {
     public List<BookingResponseDto> searchBooking(@PathVariable String name){
         return bookingService.searchBooking(name);
     }
+
+    @GetMapping("/userBookings/{userId}")
+    public List<BookingResponseDto> getBookingsByUserId(@PathVariable Long userId) {
+        return bookingService.getBookingsByUserId(userId);
+    }
 }

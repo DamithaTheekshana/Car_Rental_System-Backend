@@ -169,4 +169,37 @@ public class BookingService {
             return dto;
         }).collect(Collectors.toList());
     }
+
+    public List<BookingResponseDto> getBookingsByUserId(Long userId) {
+
+        List<Booking> bookings = bookingRepository.findByUser_userId(userId);
+
+        return bookings.stream().map(b -> {
+            BookingResponseDto dto = new BookingResponseDto();
+
+            dto.setBookingId(b.getBookingId());
+            dto.setVehicleModel(b.getVehicle().getModel());
+            dto.setVehicleImage(b.getVehicle().getImagePath());
+            dto.setStartDate(b.getStartDate());
+            dto.setEndDate(b.getEndDate());
+
+            int days = (int) ChronoUnit.DAYS.between(
+                    b.getStartDate(),
+                    b.getEndDate()
+            ) + 1;
+
+            dto.setTotalDays(days);
+
+            double totalAmount = days * b.getVehicle().getDailyRate();
+
+            dto.setCustomerName(b.getUser().getName());
+            dto.setStatus(b.getStatus());
+            dto.setTotalAmount(totalAmount);
+            dto.setPaymentStatus(b.getPaymentStatus());
+            dto.setDailyRate(b.getVehicle().getDailyRate());
+
+            return dto;
+
+        }).collect(Collectors.toList());
+    }
 }
