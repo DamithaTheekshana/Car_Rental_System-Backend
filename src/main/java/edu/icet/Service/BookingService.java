@@ -81,11 +81,7 @@ public class BookingService {
         }).collect(Collectors.toList());
     }
 
-//    public void deleteBooking(Long bookingId) {
-//
-//        bookingRepository.deleteById(bookingId);
-//    }
-    public void deleteBooking(Long bookingId) {
+        public void deleteBooking(Long bookingId) {
 
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new RuntimeException("Booking not found"));
