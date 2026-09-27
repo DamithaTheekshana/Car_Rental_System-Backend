@@ -132,7 +132,7 @@ public class BookingService {
         }
 
         // ADMIN REJECTS BOOKING
-        else if ("REJECT".equalsIgnoreCase(status)) {
+        else if ("REJECTED".equalsIgnoreCase(status)) {
 
             // Save booking to history
             bookingHistoryService.saveBookingHistory(booking, "REJECTED");
