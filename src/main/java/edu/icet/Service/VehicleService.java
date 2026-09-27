@@ -108,16 +108,18 @@ public class VehicleService {
     }
 
     public List<AdminDisplayVehiclesDto> adminDisplayVehicles() {
+
         List<Vehicle> vehicles = vehicleRepository.findAll();
+
         return vehicles.stream()
                 .map(v -> new AdminDisplayVehiclesDto(
                         v.getVehicleId(),
-                        v.getBrand(),
+                        v.getImagePath(),
                         v.getModel(),
                         v.getRegNo(),
-                        v.getFuelType(),
-                        v.getImagePath(),
+                        v.getBrand(),
                         v.getType(),
+                        v.getFuelType(),
                         v.getSeat(),
                         v.getDailyRate(),
                         v.getStatus()
