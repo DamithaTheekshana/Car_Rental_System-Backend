@@ -52,4 +52,9 @@ public class BookingController {
     public List<BookingResponseDto> getBookingsByUserId(@PathVariable Long userId) {
         return bookingService.getBookingsByUserId(userId);
     }
+
+    @GetMapping("/adminBookings")
+    public List<BookingResponseDto> getAdminBookings() {
+        return bookingService.getAdminBookings();
+    }
 }
