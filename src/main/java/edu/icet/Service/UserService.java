@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -86,5 +87,15 @@ public class UserService {
 
         Users saved = userRepository.save(users);
         return toResponse(saved);
+    }
+
+    public List<UserResponseDto> getAllCustomers() {
+
+        List<Users> customers =
+                userRepository.findByRole(Users.Role.CUSTOMER);
+
+        return customers.stream()
+                .map(this::toResponse)
+                .toList();
     }
 }

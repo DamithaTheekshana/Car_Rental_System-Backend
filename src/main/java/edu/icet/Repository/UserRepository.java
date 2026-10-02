@@ -4,6 +4,7 @@ import edu.icet.Model.Entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
+import java.util.List;
 
 public interface UserRepository extends JpaRepository<Users,Long> {
 
@@ -12,4 +13,6 @@ public interface UserRepository extends JpaRepository<Users,Long> {
     boolean existsByEmail(String email);
 
     boolean existsByNic(String nic);
+
+    List<Users> findByRole(Users.Role role);
 }
