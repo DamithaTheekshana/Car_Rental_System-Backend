@@ -87,10 +87,41 @@ public class VehicleService {
     }
 
 
-    public void updateVehicle(VehicleDTO dto) {
+    public void updateVehicle(VehicleDTO dto, MultipartFile image) {
+
         Vehicle vehicle = vehicleRepository.findById(dto.getVehicleId())
                 .orElseThrow(() -> new RuntimeException("Vehicle not found"));
-        mapper.map(dto, vehicle);
+
+        // Update vehicle details
+        vehicle.setModel(dto.getModel());
+        vehicle.setRegNo(dto.getRegNo());
+        vehicle.setBrand(dto.getBrand());
+        vehicle.setType(dto.getType());
+        vehicle.setFuelType(dto.getFuelType());
+        vehicle.setSeat(dto.getSeat());
+        vehicle.setDailyRate(dto.getDailyRate());
+
+        // Update image only if a new image is selected
+        if (image != null && !image.isEmpty()) {
+
+            String fileName =
+                    System.currentTimeMillis() + "_" + image.getOriginalFilename();
+
+            Path uploadPath = Paths.get(UPLOAD_DIR);
+
+            try {
+                Files.createDirectories(uploadPath);
+                Files.write(
+                        uploadPath.resolve(fileName),
+                        image.getBytes()
+                );
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to save image");
+            }
+
+            vehicle.setImagePath(fileName);
+        }
+
         vehicleRepository.save(vehicle);
     }
 

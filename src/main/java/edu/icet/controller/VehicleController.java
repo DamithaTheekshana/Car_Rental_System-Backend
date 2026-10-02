@@ -46,9 +46,13 @@ public class VehicleController {
           vehicleService.deleteVehicle(vehicleId);
     }
 
-    @PutMapping("/updateVehicle")
-    public void updateVehicle(@RequestBody VehicleDTO dto){
-        vehicleService.updateVehicle(dto);
+    @PutMapping(value = "/updateVehicle", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> updateVehicle(
+            @RequestPart("vehicle") VehicleDTO dto,
+            @RequestPart(value = "image", required = false) MultipartFile image
+    ) {
+        vehicleService.updateVehicle(dto, image);
+        return ResponseEntity.ok("Vehicle Updated Successfully!");
     }
 
     @GetMapping("/searchVehicle/{type}")
