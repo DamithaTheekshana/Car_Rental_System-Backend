@@ -54,7 +54,7 @@ public class BookingService {
     }
 
     public List<BookingResponseDto> getAllBooking() {
-        List<Booking> bookings = bookingRepository.findByPaymentStatus("UNPAID");
+        List<Booking> bookings = bookingRepository.findByStatus("PENDING");
 
 
 
