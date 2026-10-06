@@ -14,6 +14,7 @@ public class PaymentDTO {
     private Long paidId;
     private double amount;
     private LocalDateTime paidDate;
+    private String type;
     private String status;
     private Long bookingId;
 }

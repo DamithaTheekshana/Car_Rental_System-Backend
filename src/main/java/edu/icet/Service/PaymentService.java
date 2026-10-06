@@ -42,7 +42,7 @@ public class PaymentService {
         Payment payment = new Payment();
         mapper.map(dto, payment);
         payment.setAmount(dto.getAmount());
-        payment.setType("Cash");
+        payment.setType(dto.getType());
         payment.setStatus("PAID");
         payment.setPaidDate(LocalDateTime.now());
         payment.setBookingEntity(booking);
