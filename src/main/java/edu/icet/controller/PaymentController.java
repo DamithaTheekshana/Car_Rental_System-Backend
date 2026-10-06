@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import edu.icet.Model.Dto.PaymentResponseDTO;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/payment")
@@ -18,5 +22,10 @@ public class PaymentController {
     @PostMapping("/addPayment")
     public void addPayment(@RequestBody PaymentDTO dto){
         paymentService.addPayment(dto);
+    }
+
+    @GetMapping("/all")
+    public List<PaymentResponseDTO> getAllPayments() {
+        return paymentService.getAllPayments();
     }
 }

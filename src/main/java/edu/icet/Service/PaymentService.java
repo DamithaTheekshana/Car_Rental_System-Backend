@@ -1,6 +1,5 @@
 package edu.icet.Service;
 
-import edu.icet.Model.Dto.BookingResponseDto;
 import edu.icet.Model.Dto.PaymentDTO;
 import edu.icet.Model.Entity.Booking;
 import edu.icet.Model.Entity.Payment;
@@ -12,6 +11,10 @@ import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import edu.icet.Model.Dto.PaymentResponseDTO;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import java.time.LocalDateTime;
 
@@ -62,5 +65,54 @@ public class PaymentService {
         vehicle.setStatus("AVAILABLE");
         vehicleRepository.save(vehicle);
 
+    }
+
+    public List<PaymentResponseDTO> getAllPayments() {
+
+        List<Payment> payments = paymentRepository.findAll();
+
+        return payments.stream().map(payment -> {
+
+            PaymentResponseDTO dto = new PaymentResponseDTO();
+
+            dto.setPaymentId(payment.getPaidId());
+
+            dto.setPaidDate(payment.getPaidDate());
+
+            dto.setAmount(payment.getAmount());
+
+            dto.setType(payment.getType());
+
+            dto.setStatus(payment.getStatus());
+
+
+            // Get booking details
+            Booking booking = payment.getBookingEntity();
+
+            if (booking != null) {
+
+                // Customer
+                if (booking.getUser() != null) {
+                    dto.setCustomerName(
+                            booking.getUser().getName()
+                    );
+                }
+
+                // Vehicle
+                if (booking.getVehicle() != null) {
+
+                    dto.setVehicleModel(
+                            booking.getVehicle().getModel()
+                    );
+
+                    dto.setVehicleImage(
+                            booking.getVehicle().getImagePath()
+                    );
+                }
+            }
+
+            return dto;
+
+        }).collect(Collectors.toList());
     }
 }
