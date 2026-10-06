@@ -21,4 +21,9 @@ public class BookingHistoryController {
     ) {
         return bookingHistoryService.getHistoryByCustomerId(customerId);
     }
+
+    @GetMapping("/all")
+    public List<BookingHistoryResponseDto> getAllBookingHistory() {
+        return bookingHistoryService.getAllBookingHistory();
+    }
 }

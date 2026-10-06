@@ -15,6 +15,8 @@ import edu.icet.Repository.VehicleRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import edu.icet.Model.Entity.Users;
+import edu.icet.Repository.UserRepository;
 
 @Service
 public class BookingHistoryService {
@@ -24,6 +26,9 @@ public class BookingHistoryService {
 
     @Autowired
     private VehicleRepository vehicleRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public void saveBookingHistory(Booking booking, String status) {
 
@@ -68,6 +73,52 @@ public class BookingHistoryService {
             dto.setTotal(history.getTotal());
             dto.setStatus(history.getStatus());
 
+            Vehicle vehicle = vehicleRepository
+                    .findById(history.getVehicleId())
+                    .orElse(null);
+
+            if (vehicle != null) {
+                dto.setVehicleModel(vehicle.getModel());
+                dto.setVehicleImage(vehicle.getImagePath());
+            }
+
+            return dto;
+
+        }).collect(Collectors.toList());
+    }
+
+    public List<BookingHistoryResponseDto> getAllBookingHistory() {
+
+        List<BookingHistory> historyList =
+                bookingHistoryRepository.findAll();
+
+        return historyList.stream().map(history -> {
+
+            BookingHistoryResponseDto dto =
+                    new BookingHistoryResponseDto();
+
+            dto.setHistoryId(history.getHistoryId());
+            dto.setBookingId(history.getBookingId());
+
+            dto.setBookingDate(history.getBookingDate());
+            dto.setStartDate(history.getStartDate());
+            dto.setEndDate(history.getEndDate());
+
+            dto.setTotal(history.getTotal());
+            dto.setStatus(history.getStatus());
+
+
+            // Get Customer Details
+            Users customer = userRepository
+                    .findById(history.getCustomerId())
+                    .orElse(null);
+
+            if (customer != null) {
+                dto.setCustomerName(customer.getName());
+            }
+
+
+            // Get Vehicle Details
             Vehicle vehicle = vehicleRepository
                     .findById(history.getVehicleId())
                     .orElse(null);
