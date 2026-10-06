@@ -201,7 +201,7 @@ public class BookingService {
 
     public List<BookingResponseDto> getAdminBookings() {
 
-        List<Booking> bookings = bookingRepository.findAll();
+        List<Booking> bookings = bookingRepository.findByStatusIn(List.of("PENDING", "APPROVED"));
 
         return bookings.stream().map(b -> {
 
