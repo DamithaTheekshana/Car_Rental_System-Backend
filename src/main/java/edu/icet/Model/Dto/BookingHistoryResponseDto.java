@@ -15,6 +15,8 @@ public class BookingHistoryResponseDto {
     private Long historyId;
     private Long bookingId;
 
+    private String customerName;
+
     private String vehicleModel;
     private String vehicleImage;
 
