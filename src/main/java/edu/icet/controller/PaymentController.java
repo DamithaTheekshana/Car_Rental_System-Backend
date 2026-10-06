@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import edu.icet.Model.Dto.PaymentResponseDTO;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -27,5 +28,12 @@ public class PaymentController {
     @GetMapping("/all")
     public List<PaymentResponseDTO> getAllPayments() {
         return paymentService.getAllPayments();
+    }
+
+    @GetMapping("/customer/{userId}")
+    public List<PaymentResponseDTO> getPaymentsByCustomer(
+            @PathVariable Long userId
+    ) {
+        return paymentService.getPaymentsByCustomer(userId);
     }
 }

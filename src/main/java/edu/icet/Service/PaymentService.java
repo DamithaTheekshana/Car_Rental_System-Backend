@@ -115,4 +115,46 @@ public class PaymentService {
 
         }).collect(Collectors.toList());
     }
+
+    public List<PaymentResponseDTO> getPaymentsByCustomer(Long userId) {
+
+        List<Payment> payments =
+                paymentRepository.findByBookingEntity_User_UserId(userId);
+
+        return payments.stream().map(payment -> {
+
+            PaymentResponseDTO dto = new PaymentResponseDTO();
+
+            dto.setPaymentId(payment.getPaidId());
+            dto.setPaidDate(payment.getPaidDate());
+            dto.setAmount(payment.getAmount());
+            dto.setType(payment.getType());
+            dto.setStatus(payment.getStatus());
+
+            Booking booking = payment.getBookingEntity();
+
+            if (booking != null) {
+
+                if (booking.getUser() != null) {
+                    dto.setCustomerName(
+                            booking.getUser().getName()
+                    );
+                }
+
+                if (booking.getVehicle() != null) {
+
+                    dto.setVehicleModel(
+                            booking.getVehicle().getModel()
+                    );
+
+                    dto.setVehicleImage(
+                            booking.getVehicle().getImagePath()
+                    );
+                }
+            }
+
+            return dto;
+
+        }).collect(Collectors.toList());
+    }
 }
