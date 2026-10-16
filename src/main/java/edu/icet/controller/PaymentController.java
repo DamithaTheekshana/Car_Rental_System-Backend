@@ -3,16 +3,12 @@ package edu.icet.controller;
 import edu.icet.Model.Dto.PaymentDTO;
 import edu.icet.Service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import edu.icet.Model.Dto.PaymentResponseDTO;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
+@CrossOrigin(origins = "https://frontend-car-rental-system.vercel.app")
 @RestController
 @RequestMapping("/payment")
 public class PaymentController {

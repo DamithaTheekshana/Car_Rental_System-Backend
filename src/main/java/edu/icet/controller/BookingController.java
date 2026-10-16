@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "https://frontend-car-rental-system.vercel.app")
 @RestController
 @RequestMapping("/booking")
 

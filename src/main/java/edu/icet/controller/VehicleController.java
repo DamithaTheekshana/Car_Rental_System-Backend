@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+@CrossOrigin(origins = "https://frontend-car-rental-system.vercel.app")
 @RestController
 @RequestMapping("/vehicle")
 public class VehicleController {
